@@ -8,7 +8,6 @@ services:
       - MONGO_USER=unifi
       - MONGO_PASS=${MUP}
       - MONGO_DBNAME=unifi
-      - MONGO_DBNAME2=unifi_audit
       - MONGO_AUTHSOURCE=admin
     volumes:
       - ~/docker/unifi/db/data:/data/db
