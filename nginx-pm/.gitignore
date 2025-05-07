@@ -1,0 +1,5 @@
+# Ignore .env and subfolders
+.*
+/*
+# Don't ignore .gitignore
+!.gitignore
