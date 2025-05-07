@@ -13,7 +13,9 @@ db.createUser({
   pwd: "${MONGO_PASS}",
   roles: [
     { db: "${MONGO_DBNAME}", role: "dbOwner" },
-    { db: "${MONGO_DBNAME}_stat", role: "dbOwner" }
+    { db: "${MONGO_DBNAME}_stat", role: "dbOwner" },
+    { db: "${MONGO_DBNAME2}", role: "dbOwner" },
+    { db: "${MONGO_DBNAME2}_stat", role: "dbOwner" }
   ]
 })
 EOF
