@@ -1,0 +1,30 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:1.33.2
+    container_name: vaultwarden
+    volumes:
+      - ./data:/data
+    environment:
+      - WEBSOCKET_ENABLED=true
+      - SIGNUPS_ALLOWED=false
+      - ADMIN_TOKEN=${VAULTWARDEN_ADMIN_TOKEN}
+      - DOMAIN=${VAULT_DOMAIN}
+    networks:
+      - frontend
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.vaultwarden-https.tls=true
+      - traefik.http.routers.vaultwarden-https.tls.certresolver=cloudflare
+      - traefik.http.routers.vaultwarden-https.entrypoints=websecure
+      - traefik.http.routers.vaultwarden-https.rule=host(${VAULT_HOST})
+      # block admin panel from outside networks
+      - traefik.http.routers.vaultwarden-https-admin.tls=true
+      - traefik.http.routers.vaultwarden-https-admin.tls.certresolver=cloudflare
+      - traefik.http.routers.vaultwarden-https-admin.entrypoints=websecure
+      - traefik.http.routers.vaultwarden-https-admin.rule=host(${VAULT_HOST}) && pathprefix(`/admin`)
+      - traefik.http.routers.vaultwarden-https-admin.middlewares=homelab-ips@file
+    restart: unless-stopped
+
+networks:
+  frontend:
+    external: true

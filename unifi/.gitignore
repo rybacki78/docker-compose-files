@@ -1,5 +1,5 @@
 # Ignore .env and subfolders
 .*
 /*
-# Don't ignore .gitignore
-!.gitignore
+# Don't ignore
+!docker-compose.yaml
