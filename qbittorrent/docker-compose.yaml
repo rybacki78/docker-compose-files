@@ -1,0 +1,27 @@
+---
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:5.1.0
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - ./config:/config
+      - /home/piotr/big-data/arr/torrents:/arr/torrents
+      - /home/piotr/big-data/no_arr/torrents:/no_arr/torrents
+      - ./guarding.p2p:/guarding.p2p:ro      
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    networks:
+      - arr
+
+networks:
+  arr:
+    external: true

@@ -1,0 +1,24 @@
+---
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+      - JELLYFIN_PublishedServerUrl=http://10.10.26.21
+    volumes:
+      - ./config:/config
+      - /home/piotr/big-data/arr/media:/arr/media
+    ports:
+      - 8096:8096
+      - 7359:7359/udp
+      - 1900:1900/udp
+    restart: unless-stopped
+    networks:
+      - arr
+
+networks:
+  arr:
+    external: true
